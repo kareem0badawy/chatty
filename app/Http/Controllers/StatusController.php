@@ -27,8 +27,14 @@ class StatusController extends Controller
         ->with('info', 'Status Posted...');
     }
 
-    public function postRaply(Request $request, $statusId)
+    public function postReply(Request $request, $statusId)
     {
-        dd($statusId);
+         $this->validate($request, [
+                "reply-{$statusId}" => 'required|max:1000',
+            ], [
+                'required' => 'The reply body is required.'
+            ]);
+
+         
     }
 }

@@ -59,10 +59,11 @@
 								</div>
 							</div-->
 
-							<form role="form" action="{{ route('status.replay', ['statusId' => $status->id] )}}" method="post">
-								<div class="form-group">
+							<form role="form" action="{{ route('status.reply', ['statusId' => $status->id] )}}" method="post">
+								<div class="form-group{{ $errors->has("reply-{$status->id}") ? 'has-error' : '' }}">
 									<textarea name="reply-{{ $status->id }}" class="form-control"
 										 rows="2" placeholder="Reply to this status"></textarea>
+											
 								</div>
 								<input type="submit"  value="Reply" class="btn btn-default btn-sm">
 								<hr>
@@ -76,5 +77,3 @@
 		</div>
 	</div>
 @stop
-
-						
