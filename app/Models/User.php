@@ -57,6 +57,11 @@ class User extends Model implements AuthenticatableContract
     }
 
 
+    public function statuses()
+    {
+        return $this->hasMany('Chatty\Models\Status', 'user_id');
+    }
+    
     public function friendsOfMine()
     {
         return $this->belongsToMany('Chatty\Models\User', 'friends', 'user_id', 'friend_id');
