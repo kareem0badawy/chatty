@@ -26,4 +26,9 @@ class StatusController extends Controller
         ->route('home')
         ->with('info', 'Status Posted...');
     }
+
+    public function postRaply(Request $request, $statusId)
+    {
+        dd($statusId);
+    }
 }

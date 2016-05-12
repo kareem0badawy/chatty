@@ -106,3 +106,9 @@ Route::post('/status', [
 	'uses'  => 'StatusController@postStatus',
 	'middleware' =>  ['auth']
 	]);
+
+Route::post('/status/{statusId}/replay', [
+	'as'    => 'status.replay',
+	'uses'  => 'StatusController@postRaply',
+	'middleware' =>  ['auth']
+	]);
