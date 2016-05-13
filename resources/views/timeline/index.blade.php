@@ -30,12 +30,13 @@
 								<a class="pull-left" href="{{ route('profile.index',
 								 ['username' => $status->user->username])}}">
 									<img style="border-radius: 50%" class="media-object" 
-									src="{{ $status->user->getAvatarUrl() }}" title="{{ $status->user->getFirstNameOrUsername() }}">
+									src="{{ $status->user->getAvatarUrl() }}"
+									 title="{{ $status->user->getFirstNameOrUsername() }}">
 								</a>
 								<div class="media-body">
 									<h5 class="media-heading"><a href="{{ route('profile.index',
 								 ['username' => $status->user->username])}}">
-								 {{ $status->user->getFirstNameOrUsername() }}
+								 {{ $status->user->getNameOrUsername() }}
 								 </a></h5>
 									<p>{{ $status->body }}</p>
 									<ul class="list-inline">
@@ -44,20 +45,29 @@
 										<li>6 Likes</li>
 									</ul>
 									
-							<!--div class="media">
-								<a class="pull-left" href="">
-									<img class="media-object" src="">
-								</a>
+							@foreach($status->replies as $reply)
+								<div class="media">
+									<a class="pull-left" href="{{ route('profile.index',
+									 	['username' => $reply->user->username])}}">
+										<img style="border-radius: 50%" class="media-object" 
+										src="{{ $status->user->getAvatarUrl() }}"
+										 title="{{ $status->user->getFirstNameOrUsername() }}">
+									</a>
 								<div class="media-body">
-									<h5 class="media-heading"><a href="">Billy</a></h5>
-									<p>Yes, it is lovely!</p>
+									<h5 class="media-heading"><a href="{{ route('profile.index',
+									 	['username' => $reply->user->username])}}">
+										{{ $reply->user->getNameOrUsername() }}
+										</a>
+									</h5>
+									<p> {{ $reply->body }} </p>
 									<ul class="list-inline">
-										<li>8 days ago.</li>
-										<li><a href="">Like</a></li>
+										<li>{{ $reply->created_at->diffForHumans() }}</li>
+										<li style="font-size: 25px;"><a href="" style="color: red">❤</a></li>
 										<li>4 Likes</li>
 									</ul>
 								</div>
-							</div-->
+							</div>
+							@endforeach
 
 							<form role="form" action="{{ route('status.reply', ['statusId' => $status->id] )}}" method="post">
 								<div class="form-group{{ $errors->has("reply-{$status->id}") ? 'has-error' : '' }}">
