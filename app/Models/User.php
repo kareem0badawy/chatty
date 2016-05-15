@@ -2,6 +2,7 @@
 
 namespace Chatty\Models;
 
+use Chatty\Models\Status;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -61,6 +62,11 @@ class User extends Model implements AuthenticatableContract
     {
         return $this->hasMany('Chatty\Models\Status', 'user_id');
     }
+
+    public function likes()
+    {
+        return $this->hasMany('Chatty\Models\Like', 'user_id');
+    }
     
     public function friendsOfMine()
     {
@@ -118,8 +124,12 @@ class User extends Model implements AuthenticatableContract
         return (bool) $this->friends()->where('id', $user->id)->count();
     }
 
-    public function getAccept()
+    public function hasLikedStatus(Status $status)
     {
-    
+        return (bool) $status->likes
+            ->where('likeable_id', $status->id)
+            ->where('likeable_type', get_class($status))
+            ->where('user_id', $this->id)
+            ->count();
     }
 }

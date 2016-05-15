@@ -112,3 +112,13 @@ Route::post('/status/{statusId}/reply', [
 	'uses'  => 'StatusController@postReply',
 	'middleware' =>  ['auth']
 	]);
+
+
+/**
+ * Like
+ */
+Route::get('/status/{statusId}/like', [
+	'as'    => 'status.like',
+	'uses'  => 'StatusController@getLike',
+	'middleware' =>  ['auth']
+	]);

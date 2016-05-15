@@ -5,6 +5,7 @@ namespace Chatty\Http\Controllers;
 use Auth;
 
 use Chatty\Models\User;
+use Chatty\Models\Like;
 use Chatty\Models\Status;
 use Illuminate\Http\Request;
 
@@ -49,5 +50,27 @@ class StatusController extends Controller
          $status->replies()->save($reply);
 
          return redirect()->back();
+    }
+    public function getLike($statusId)
+    {
+        $status = Status::find($statusId);
+
+
+        if (!$status) {
+             return redirect()->route('home'); 
+         } 
+
+          if (!Auth::user()->isFriendWith($status->user)) {
+              return redirect()->route('home');
+         }
+
+         if (!Auth::user()->hasLikedStatus($status)) {
+             return redirect()->back();
+         }
+
+         $like = $status->likes()->create([]);
+         Auth::user()->likes()->save($like);
+
+          return redirect()->back();
     }
 }
